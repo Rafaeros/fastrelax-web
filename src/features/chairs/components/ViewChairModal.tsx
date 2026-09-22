@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { Badge, Button, DetailList, Icon, Modal, useToast } from "@/components/ui";
 import type { DetailItem } from "@/components/ui";
-import { formatLongDate } from "@/lib/format";
+import { formatLongDate, formatLongDateTime } from "@/lib/format";
 import { testChairRelayAction } from "@/features/chairs/actions/chair.actions";
 import type { Chair } from "@/features/chairs/types/chair.types";
 
@@ -64,7 +64,7 @@ export function ViewChairModal({ chair, onClose, onEdit, isAdmin = false }: View
             </Badge>
           ),
         },
-        { label: "Último sinal", value: formatLongDate(chair.lastSeenAt) },
+        { label: "Último sinal", value: formatLongDateTime(chair.lastSeenAt) },
         { label: "Cadastrada em", value: formatLongDate(chair.createdAt), full: true },
       ]
     : [];

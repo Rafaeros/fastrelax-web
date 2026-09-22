@@ -15,7 +15,7 @@ import {
 } from "@/components/ui";
 import type { DataTableColumn } from "@/components/ui";
 import type { PageSlice } from "@/lib/api/pagination.types";
-import { formatLongDate } from "@/lib/format";
+import { formatLongDateTime } from "@/lib/format";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import {
   deleteChairAction,
@@ -28,6 +28,7 @@ import { RenameChairModal } from "@/features/chairs/components/RenameChairModal"
 import { ViewChairModal } from "@/features/chairs/components/ViewChairModal";
 import { PushMqttAction } from "@/features/chairs/components/PushMqttAction";
 import { PushNetworkAction } from "@/features/chairs/components/PushNetworkAction";
+import { ResetPairingAction } from "@/features/chairs/components/ResetPairingAction";
 import type {
   Chair,
   ChairFilter,
@@ -170,7 +171,7 @@ export function ChairsTable({
         header: "Último sinal",
         hideOnMobile: true,
         cell: (row) => (
-          <span className="text-ink-secondary">{formatLongDate(row.lastSeenAt)}</span>
+          <span className="text-ink-secondary">{formatLongDateTime(row.lastSeenAt)}</span>
         ),
       },
       {
@@ -184,6 +185,7 @@ export function ChairsTable({
             <EditAction onClick={() => setEditing(row)} />
             {isPlatformTeam && <PushNetworkAction chair={row} onPushed={reload} />}
             {isPlatformTeam && <PushMqttAction chair={row} onPushed={reload} />}
+            {isPlatformTeam && <ResetPairingAction chair={row} onReset={reload} />}
             {/*
               Ativar/desativar e remover refletem o contrato comercial com a
               Physical — o RH da empresa cliente não decide isso sobre o próprio

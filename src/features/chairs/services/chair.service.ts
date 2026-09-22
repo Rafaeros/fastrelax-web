@@ -157,3 +157,17 @@ export async function pushChairMqtt(id: number): Promise<ApiResult<ChairMqttResu
     token: await readAccessToken(),
   });
 }
+
+/**
+ * Esquece o token pareado, sem apagar o cadastro. Necessário quando a flash do
+ * ESP32 é apagada por completo (não um reflash comum pelo painel, que não toca
+ * a NVS) — a placa sorteia token novo no boot seguinte, e sem isto o backend
+ * segue recusando por divergência até alguém rodar UPDATE manual no banco.
+ * Exclusivo da equipe da plataforma no backend.
+ */
+export async function resetChairPairing(id: number): Promise<ApiResult<Chair>> {
+  return apiFetch<Chair>(`${RESOURCE}/${id}/reset-pairing`, {
+    method: "POST",
+    token: await readAccessToken(),
+  });
+}

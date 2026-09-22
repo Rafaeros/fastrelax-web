@@ -57,7 +57,7 @@ export function MobileAccessCard() {
             fullWidth
             leadingIcon={<Icon name="lock" className="h-4 w-4" />}
           >
-            Área do cliente
+            Área da empresa
           </ButtonLink>
         </div>
       </Card>

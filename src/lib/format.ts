@@ -50,6 +50,25 @@ export function formatLongDate(value: string | null | undefined): string {
   return Number.isNaN(date.getTime()) ? "—" : longDateFormatter.format(date);
 }
 
+const longDateTimeFormatter = new Intl.DateTimeFormat("pt-BR", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
+/**
+ * Data e hora por extenso em pt-BR. Para campos onde o momento exato importa
+ * — "último sinal" de um heartbeat, por exemplo, onde só o dia não diz se a
+ * cadeira está online agora ou sumiu de manhã.
+ */
+export function formatLongDateTime(value: string | null | undefined): string {
+  if (!value) return "—";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "—" : longDateTimeFormatter.format(date);
+}
+
 /** Remove tudo que não é dígito — o backend recebe CPF e telefone crus. */
 export function onlyDigits(value: string): string {
   return value.replace(/\D/g, "");

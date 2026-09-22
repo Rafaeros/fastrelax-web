@@ -10,6 +10,7 @@ import {
   pushChairNetwork,
   pushCompanyNetwork,
   renameChair,
+  resetChairPairing,
   testChairRelay,
   toggleChairActive,
   updateChair,
@@ -195,6 +196,18 @@ export async function testChairRelayAction(
   durationSeconds = 10,
 ): Promise<MutationResult> {
   const result = await testChairRelay(id, durationSeconds);
+  return { ok: result.ok, message: result.message };
+}
+
+/**
+ * Esquece o token pareado da cadeira. Usar depois de apagar a flash inteira do
+ * ESP32 — a placa sorteia token novo no boot seguinte, e ele precisa ser
+ * adotado de novo pelo backend no próximo heartbeat.
+ */
+export async function resetChairPairingAction(id: number): Promise<MutationResult> {
+  const result = await resetChairPairing(id);
+  if (result.ok) revalidatePath(ROUTE);
+
   return { ok: result.ok, message: result.message };
 }
 

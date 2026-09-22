@@ -29,7 +29,7 @@ const AREAS: Area[] = [
     description:
       "Cadastre colaboradores, configure horários e acompanhe os indicadores de uso das cadeiras.",
     href: "/entrar" as Route,
-    cta: "Área do cliente",
+    cta: "Área da empresa",
     icon: "shield",
     primary: false,
   },

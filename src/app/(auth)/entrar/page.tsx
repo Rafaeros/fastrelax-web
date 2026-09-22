@@ -51,7 +51,7 @@ export default async function LoginPage({
           </div>
 
           <div className={LOGIN_HEADING}>
-            <span className={LOGIN_EYEBROW}>Área do cliente</span>
+            <span className={LOGIN_EYEBROW}>Área da empresa</span>
             <h1 className={LOGIN_TITLE}>Acesse seu painel</h1>
             <p className={LOGIN_DESCRIPTION}>
               Entre com as credenciais fornecidas pela sua empresa para gerenciar sessões,

@@ -65,7 +65,7 @@ export function Navbar() {
             shrink-0: sem isto o bloco de ações encolhia e os rótulos dos botões
             quebravam em duas linhas quando os links de navegação apareciam.
             Os textos são curtos pelo mesmo motivo — "Área do colaborador" e
-            "Área do cliente" juntos não cabem ao lado da logo e dos 5 links.
+            "Área da empresa" juntos não cabem ao lado da logo e dos 5 links.
           */}
           <div className="flex shrink-0 items-center gap-2">
             {/* Colaborador em destaque: é quem entra todo dia, enquanto o
@@ -91,7 +91,7 @@ export function Navbar() {
               })}
             >
               <Icon name="lock" className="h-4 w-4" />
-              Cliente
+              Empresa
             </Link>
 
             <Button
@@ -139,7 +139,7 @@ export function Navbar() {
                   className={buttonStyles({ variant: "secondary", size: "sm", fullWidth: true })}
                 >
                   <Icon name="lock" className="h-4 w-4" />
-                  Área do cliente
+                  Área da empresa
                 </Link>
               </li>
             </ul>
