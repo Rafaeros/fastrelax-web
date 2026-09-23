@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Build de produção empacota só o necessário para rodar (.next/standalone),
+  // sem precisar copiar node_modules inteiro pra imagem Docker.
+  output: "standalone",
+
   /*
    * Sem `output: "export"`.
    *

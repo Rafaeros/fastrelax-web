@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+android/
+logs/
+.git/
+.vscode/
+.claude/
+.aiox-core/
+.idea/
+.env
+.env.local
+*.log
