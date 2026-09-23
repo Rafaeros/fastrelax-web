@@ -47,6 +47,19 @@ next-env.d.ts
 .env.*.local
 *.key
 
+# Ferramentas de assistente de IA (configuração local, não é entregável do projeto)
+.aiox-core/
+.antigravity/
+.claude/
+.codex/
+.cursor/
+.gemini/
+.github/
+.kimi/
+.grok/
+AGENTS.md
+CLAUDE.md
+
 # Dependencies (AIOX)
 node_modules/
 
