@@ -40,6 +40,7 @@ export function CurrentSessionCard({ session }: CurrentSessionCardProps) {
 
   useEffect(() => {
     // Primeira renderização no cliente define a hora atual.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNow(Date.now());
 
     if (session?.status !== "STARTED" || !session.startedAt) return;
