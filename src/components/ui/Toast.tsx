@@ -70,6 +70,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const [popoverSupported, setPopoverSupported] = useState(true);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPopoverSupported(typeof HTMLElement !== "undefined" && "showPopover" in HTMLElement.prototype);
   }, []);
 
