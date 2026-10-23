@@ -103,12 +103,13 @@ jobs:
             docker rm frontend || true
 
             # 3. Sobe o container conectado na rede 'fastrelax-network'
-            # Expõe a porta interna 3000 na porta 80 pública do servidor
+            # Publica só no loopback: quem atende 80/443 é o Nginx do host, que
+            # faz o proxy para 127.0.0.1:3000 e cuida do certificado.
             docker run -d \
               --name frontend \
               --restart unless-stopped \
               --network fastrelax-network \
-              -p 80:3000 \
+              -p 127.0.0.1:3000:3000 \
               -e FASTRELAX_API_URL="${{ secrets.FASTRELAX_API_URL }}" \
               -e SESSION_COOKIE_SECURE="${{ secrets.SESSION_COOKIE_SECURE }}" \
               ${{ secrets.DOCKERHUB_USERNAME }}/fastrelax-web:latest
