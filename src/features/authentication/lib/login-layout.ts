@@ -72,3 +72,22 @@ export const LOGIN_CARD = "lg:p-[clamp(1rem,3dvh,2rem)]";
 
 /** Espaçamento entre os campos do formulário. */
 export const LOGIN_FORM = "flex flex-col gap-5 lg:gap-[clamp(0.75rem,2.2dvh,1.25rem)]";
+
+/**
+ * Variantes compactas para a tela de primeiro acesso (definir senha).
+ *
+ * <p>
+ * Lá a regra é caber sem rolar também no celular: a pessoa chega com o teclado
+ * prestes a abrir e só tem duas caixas para preencher, então ver o botão
+ * "Definir senha" sem rolar vale mais que o respiro. Abaixo de `lg` o topo/base
+ * cai de 3rem para 2rem e o vão da pilha de 2rem para 1.5rem, o que leva a
+ * tela a caber em 360×640. A partir de `lg` valem os mesmos `clamp` do login.
+ */
+export const LOGIN_MAIN_COMPACT =
+  "flex flex-col justify-center px-5 pt-8 pb-8 sm:px-10 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pt-[clamp(0.75rem,2.5dvh,2.5rem)] lg:pb-[clamp(0.75rem,2.5dvh,2.5rem)]";
+
+export const LOGIN_MAIN_COMPACT_SAFE_AREA =
+  "flex flex-col justify-center px-5 pt-[calc(env(safe-area-inset-top)+2rem)] pb-8 sm:px-10 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pt-[clamp(0.75rem,2.5dvh,2.5rem)] lg:pb-[clamp(0.75rem,2.5dvh,2.5rem)]";
+
+export const LOGIN_STACK_COMPACT =
+  "mx-auto flex w-full max-w-md flex-col gap-6 lg:gap-[clamp(0.875rem,2.4dvh,2rem)]";

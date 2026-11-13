@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { SessionsAgendaView } from "@/features/sessions/components/SessionsAgendaView";
 import { currentMonth, monthRange } from "@/features/sessions/lib/calendar";
 import { listSessions } from "@/features/sessions/services/session.service";
 import { requireCompanyUser } from "@/features/authentication/lib/guards";
 
 export const metadata: Metadata = {
-  title: "Agenda — physical",
+  title: `Agenda — ${brand.name}`,
 };
 
 export default async function AgendaPage() {

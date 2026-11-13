@@ -8,6 +8,7 @@ import { panelHomeFor, panelNavFor } from "@/config/navigation";
 import { LogoutButton } from "@/features/authentication/components/LogoutButton";
 import { ROLE_SHORT_LABELS } from "@/features/authentication/lib/roles";
 import { getCurrentUser } from "@/features/authentication/services/auth.service";
+import { BillingStatusBanner } from "@/features/billing/components/BillingStatusBanner";
 
 /**
  * Shell das rotas do painel. O guard fica aqui: qualquer página sob `/painel`
@@ -79,6 +80,9 @@ export default async function PainelLayout({ children }: { children: ReactNode }
           área segura, senão o último item da lista fica coberto por ela.
         */}
         <main className="min-h-0 flex-1 overflow-y-auto px-4 py-6 pb-[calc(4.5rem+env(safe-area-inset-bottom))] sm:px-8 lg:py-8 lg:pb-8">
+          <div className="mb-4 empty:mb-0">
+            <BillingStatusBanner user={user} />
+          </div>
           {children}
         </main>
       </div>

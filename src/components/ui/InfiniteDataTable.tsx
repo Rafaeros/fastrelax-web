@@ -98,6 +98,16 @@ export function InfiniteDataTable<TRow>({
     const sentinel = sentinelRef.current;
     if (!sentinel || !hasMore) return;
 
+    const tableScrollRoot = sentinel.closest<HTMLElement>("[data-scroll-root]");
+    const mainScrollRoot = sentinel.closest<HTMLElement>("main");
+    // No desktop (lg+) com tabela de altura fixa, a rolagem acontece em [data-scroll-root];
+    // no mobile ou em páginas que rolam inteiras pelo <main>, observar o <main> garante que
+    // o sentinela dispare ao descer a tela.
+    const root =
+      tableScrollRoot && tableScrollRoot.scrollHeight > tableScrollRoot.clientHeight + 4
+        ? tableScrollRoot
+        : (mainScrollRoot ?? tableScrollRoot);
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
@@ -105,8 +115,7 @@ export function InfiniteDataTable<TRow>({
         }
       },
       {
-        // Sem root explícito o observer usaria a janela, que aqui nunca rola.
-        root: sentinel.closest("[data-scroll-root]"),
+        root,
         // Antecipa a busca antes de o usuário bater no fim.
         rootMargin: "240px",
       },
@@ -114,7 +123,7 @@ export function InfiniteDataTable<TRow>({
 
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [hasMore, loadNext]);
+  }, [hasMore, loadNext, rows.length]);
 
   const retry = () => {
     setHasMore(true);

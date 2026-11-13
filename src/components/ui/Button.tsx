@@ -47,6 +47,8 @@ type SharedProps = {
   trailingIcon?: ReactNode;
   /** Ocupa 100% da largura do container. */
   fullWidth?: boolean;
+  /** Estado de submissão/carregamento: desabilita o botão e exibe spinner sem vazar pro DOM. */
+  loading?: boolean;
 };
 
 /**
@@ -76,6 +78,8 @@ export function Button({
   leadingIcon,
   trailingIcon,
   fullWidth,
+  loading,
+  disabled,
   className,
   children,
   type = "button",
@@ -84,10 +88,26 @@ export function Button({
   return (
     <button
       type={type}
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
       className={buttonStyles({ variant, size, fullWidth, className })}
       {...rest}
     >
-      {leadingIcon}
+      {loading ? (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="h-4 w-4 shrink-0 animate-spin"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        >
+          <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+        </svg>
+      ) : (
+        leadingIcon
+      )}
       {children}
       {trailingIcon}
     </button>
@@ -103,12 +123,17 @@ export function ButtonLink({
   leadingIcon,
   trailingIcon,
   fullWidth,
+  loading,
   className,
   children,
   ...rest
 }: ButtonLinkProps) {
   return (
-    <a className={buttonStyles({ variant, size, fullWidth, className })} {...rest}>
+    <a
+      aria-busy={loading || undefined}
+      className={buttonStyles({ variant, size, fullWidth, className })}
+      {...rest}
+    >
       {leadingIcon}
       {children}
       {trailingIcon}

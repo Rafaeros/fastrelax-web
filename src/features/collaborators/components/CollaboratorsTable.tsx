@@ -6,6 +6,7 @@ import {
   DeleteAction,
   EditAction,
   InfiniteDataTable,
+  RowAction,
   RowActions,
   TableIdentity,
   TableToolbar,
@@ -16,7 +17,10 @@ import type { DataTableColumn } from "@/components/ui";
 import type { PageSlice } from "@/lib/api/pagination.types";
 import { formatCpf, formatPhone, onlyDigits } from "@/lib/format";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { deleteCollaboratorAction } from "@/features/collaborators/actions/collaborator.actions";
+import {
+  anonymizeCollaboratorAction,
+  deleteCollaboratorAction,
+} from "@/features/collaborators/actions/collaborator.actions";
 import { CollaboratorsFilterModal } from "@/features/collaborators/components/CollaboratorsFilterModal";
 import { CreateCollaboratorModal } from "@/features/collaborators/components/CreateCollaboratorModal";
 import { ExportCollaboratorsButton } from "@/features/collaborators/components/ExportCollaboratorsButton";
@@ -119,12 +123,29 @@ export function CollaboratorsTable({
         id: "actions",
         header: "Ações",
         align: "right",
-        width: "w-32",
+        width: "w-40",
         cell: (row) => (
           <RowActions>
             <ViewAction onClick={() => setViewing(row)} />
             <EditAction onClick={() => setEditing(row)} />
             <ResetPasswordAction collaborator={row} />
+            <RowAction
+              label="Anonimizar (LGPD)"
+              icon="shield"
+              onClick={async () => {
+                const confirmed = window.confirm(
+                  `Anonimizar permanentemente os dados pessoais de "${row.name}" (LGPD)?\n\nNome, CPF, telefone, e-mail e credenciais serão apagados de forma irreversível, mantendo apenas a contagem estatística de sessões e avaliações.`,
+                );
+                if (!confirmed) return;
+                const result = await anonymizeCollaboratorAction(row.id);
+                if (result.ok) {
+                  reload();
+                  toast.success(result.message);
+                } else {
+                  toast.error(result.message);
+                }
+              }}
+            />
             <DeleteAction
               itemName={row.name}
               description="O colaborador deixa de agendar sessões e sai das listagens."
@@ -150,7 +171,7 @@ export function CollaboratorsTable({
   return (
     <>
       <InfiniteDataTable
-        className="min-h-0 flex-1"
+        className="lg:min-h-0 lg:flex-1"
         title="Lista de colaboradores"
         columns={columns}
         initialSlice={initialSlice}

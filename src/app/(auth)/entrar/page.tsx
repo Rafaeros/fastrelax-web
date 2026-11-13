@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Alert, Card, Icon, Logo } from "@/components/ui";
@@ -17,8 +18,8 @@ import {
 import { getCurrentUser } from "@/features/authentication/services/auth.service";
 
 export const metadata: Metadata = {
-  title: "Entrar — physical",
-  description: "Acesso ao painel da physical.",
+  title: `Entrar — ${brand.name}`,
+  description: `Acesso ao painel da ${brand.name}.`,
 };
 
 export default async function LoginPage({

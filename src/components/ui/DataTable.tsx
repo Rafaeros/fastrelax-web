@@ -100,7 +100,7 @@ export function DataTable<TRow>({
                   key={column.id}
                   scope="col"
                   className={cn(
-                    "whitespace-nowrap px-5 py-3",
+                    "whitespace-nowrap px-3.5 py-3 sm:px-5",
                     "text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-ink-muted",
                     // Fica visível durante a rolagem vertical. A borda vai como
                     // inset shadow: borda comum some em elemento sticky.
@@ -137,7 +137,7 @@ export function DataTable<TRow>({
                     <td
                       key={column.id}
                       className={cn(
-                        "px-5 py-3.5 text-ink-secondary",
+                        "px-3.5 py-3 text-ink-secondary sm:px-5 sm:py-3.5",
                         ALIGN[column.align ?? "left"],
                         column.hideOnMobile && "hidden sm:table-cell",
                       )}

@@ -28,16 +28,17 @@ export function EvaluationsSummary({ summary }: EvaluationsSummaryProps) {
 
   return (
     <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
-      <Card padding="md" className="flex flex-col justify-between gap-4">
+      <Card
+        padding="sm"
+        className="flex flex-col justify-between gap-4 border-accent/25 bg-linear-to-br from-accent-strong/15 via-surface-card to-surface-card sm:p-6"
+      >
         <div className="flex items-start gap-4">
           <div className="flex flex-col gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-ink-tertiary">
-              Nota média
-            </span>
-            <span className="font-display text-4xl tabular-nums text-ink-primary">
+            <span className="eyebrow">Satisfação do time</span>
+            <span className="font-display text-3xl tabular-nums text-ink-primary sm:text-4xl">
               {average === null ? "—" : average.toFixed(1).replace(".", ",")}
             </span>
-            <span className="text-xs text-ink-tertiary">
+            <span className="text-xs text-ink-secondary">
               {total === 0
                 ? "Nenhuma avaliação no período"
                 : `${total} ${total === 1 ? "avaliação" : "avaliações"}`}
@@ -45,7 +46,7 @@ export function EvaluationsSummary({ summary }: EvaluationsSummaryProps) {
           </div>
 
           <span
-            className="ml-auto text-4xl"
+            className="ml-auto text-3xl sm:text-4xl"
             aria-hidden
             title={average === null ? undefined : scaleItemFor(Math.round(average))?.label}
           >
@@ -67,9 +68,9 @@ export function EvaluationsSummary({ summary }: EvaluationsSummaryProps) {
         </dl>
       </Card>
 
-      <Card padding="md" className="flex flex-col gap-3">
+      <Card padding="sm" className="flex flex-col gap-3 sm:p-6">
         <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-ink-tertiary">
-          <Icon name="chart" className="h-4 w-4" />
+          <Icon name="chart" className="h-4 w-4 text-accent-soft" />
           Distribuição das notas
         </span>
 
@@ -80,12 +81,12 @@ export function EvaluationsSummary({ summary }: EvaluationsSummaryProps) {
             const width = peak === 0 ? 0 : Math.round((item.total / peak) * 100);
 
             return (
-              <div key={item.score} className="flex items-center gap-3">
-                <dt className="flex w-28 shrink-0 items-center gap-2 text-xs text-ink-secondary">
+              <div key={item.score} className="flex items-center gap-2.5 sm:gap-3">
+                <dt className="flex w-24 shrink-0 items-center gap-1.5 text-xs text-ink-secondary sm:w-28 sm:gap-2">
                   <span aria-hidden className="text-base">
                     {scale?.emoji}
                   </span>
-                  {item.label}
+                  <span className="truncate">{item.label}</span>
                 </dt>
 
                 <div className="h-2 min-w-0 flex-1 overflow-hidden rounded-pill bg-surface-hover">
@@ -98,7 +99,7 @@ export function EvaluationsSummary({ summary }: EvaluationsSummaryProps) {
                   />
                 </div>
 
-                <dd className="w-10 shrink-0 text-right text-xs tabular-nums text-ink-secondary">
+                <dd className="w-8 shrink-0 text-right text-xs tabular-nums text-ink-secondary sm:w-10">
                   {item.total}
                 </dd>
               </div>

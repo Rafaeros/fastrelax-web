@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Alert, Card, Icon, Logo } from "@/components/ui";
@@ -17,7 +18,7 @@ import { CollaboratorLoginForm } from "@/features/collaborator-portal/components
 import { getCurrentCollaborator } from "@/features/collaborator-portal/services/portal.service";
 
 export const metadata: Metadata = {
-  title: "Entrar — physical",
+  title: `Entrar — ${brand.name}`,
   description: "Acesso do colaborador para agendar massagens.",
 };
 

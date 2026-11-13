@@ -32,9 +32,17 @@ export function DashboardMetrics({ summary }: DashboardMetricsProps) {
   ];
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {metrics.map((metric) => (
-        <Card key={metric.label} padding="lg">
+    <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+      {metrics.map((metric, idx) => (
+        <Card
+          key={metric.label}
+          padding="sm"
+          className={
+            idx === 0
+              ? "border-accent/25 bg-linear-to-br from-accent-strong/15 via-surface-card to-surface-card sm:p-6"
+              : "sm:p-6"
+          }
+        >
           <Stat
             value={metric.value}
             label={metric.label}
@@ -45,16 +53,16 @@ export function DashboardMetrics({ summary }: DashboardMetricsProps) {
 
       {/* Sem horário permitido o colaborador nunca consegue agendar: o número
           só é neutro quando é zero. */}
-      <Card padding="lg">
+      <Card padding="sm" className="sm:p-6">
         <div className="flex flex-col gap-2">
           <Stat
             value={String(summary.collaboratorsWithoutSchedule)}
-            label="Sem horário permitido"
+            label="Sem horário"
             icon={<Icon name="clock" />}
           />
           {summary.collaboratorsWithoutSchedule > 0 && (
             <Badge tone="warning" className="self-start">
-              Não conseguem agendar
+              Sem janela
             </Badge>
           )}
         </div>

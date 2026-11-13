@@ -110,3 +110,14 @@ export async function deleteCollaborator(id: number): Promise<ApiResult<null>> {
     token: await readAccessToken(),
   });
 }
+
+/**
+ * Anonimização LGPD: limpa nome, CPF, telefone, e-mail e credenciais mantendo
+ * sessões e avaliações para estatísticas agregadas da empresa.
+ */
+export async function anonymizeCollaborator(id: number): Promise<ApiResult<null>> {
+  return apiFetch<null>(`${RESOURCE}/${id}/anonymize`, {
+    method: "POST",
+    token: await readAccessToken(),
+  });
+}

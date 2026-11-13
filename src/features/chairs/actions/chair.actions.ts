@@ -178,8 +178,11 @@ export async function updateChairAction(
  * Alterna a situação. Desativar tira a cadeira do rodízio de atendimento sem
  * apagar o histórico de sessões que ela atendeu.
  */
-export async function toggleChairActiveAction(id: number): Promise<MutationResult> {
-  const result = await toggleChairActive(id);
+export async function toggleChairActiveAction(
+  id: number,
+  reason?: string,
+): Promise<MutationResult> {
+  const result = await toggleChairActive(id, reason);
   if (result.ok) revalidatePath(ROUTE);
 
   return { ok: result.ok, message: result.message };

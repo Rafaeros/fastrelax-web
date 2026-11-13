@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { Alert, Button, Icon, PasswordInput } from "@/components/ui";
+import { LOGIN_FORM } from "@/features/authentication/lib/login-layout";
 import {
   PASSWORD_INITIAL_STATE,
   type PasswordFormState,
@@ -33,7 +34,7 @@ export function PasswordSetupForm({ mode, action }: PasswordSetupFormProps) {
   const fieldErrors = state.fieldErrors ?? {};
 
   return (
-    <form action={formAction} className="flex flex-col gap-5" noValidate>
+    <form action={formAction} className={LOGIN_FORM} noValidate>
       {state.status === "error" && state.message && <Alert tone="error">{state.message}</Alert>}
 
       {state.status === "success" && state.message && (

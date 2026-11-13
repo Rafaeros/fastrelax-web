@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { Alert } from "@/components/ui";
 import { emptyPageSlice, toPageSlice } from "@/lib/api/pagination.types";
 import { requireCompanyUser } from "@/features/authentication/lib/guards";
@@ -11,7 +12,7 @@ import {
 import type { Evaluation } from "@/features/evaluations/types/evaluation.types";
 
 export const metadata: Metadata = {
-  title: "Avaliações — physical",
+  title: `Avaliações — ${brand.name}`,
 };
 
 export default async function AvaliacoesPage() {
@@ -30,8 +31,9 @@ export default async function AvaliacoesPage() {
   const initialSlice = listResult.ok ? toPageSlice(listResult.data) : emptyPageSlice<Evaluation>();
 
   return (
-    // Altura de uma tela: a lista rola dentro da tabela, o resumo fica parado.
-    <div className="flex h-full min-h-0 flex-col gap-4">
+    // No desktop (lg+), a lista rola dentro da tabela e o resumo fica parado;
+    // no celular, a página inteira rola pelo <main> para não comprimir a tabela.
+    <div className="flex flex-col gap-4 lg:h-full lg:min-h-0">
       {!listResult.ok && (
         <Alert tone="error" title="Não foi possível carregar as avaliações">
           {listResult.message}

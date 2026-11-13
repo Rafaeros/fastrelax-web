@@ -29,6 +29,7 @@ const ASSIGNABLE: Record<UserRole, UserRole[]> = {
   SYSADMIN: ["SYSADMIN", "COMPANY_ADMIN", "COMPANY_RH"],
   COMPANY_ADMIN: ["COMPANY_ADMIN", "COMPANY_RH"],
   COMPANY_RH: [],
+  COMPANY_OPERATOR: [],
 };
 
 /**

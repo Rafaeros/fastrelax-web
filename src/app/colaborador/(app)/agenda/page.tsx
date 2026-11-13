@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { redirect } from "next/navigation";
 import { Alert } from "@/components/ui";
 import { BookingView } from "@/features/collaborator-portal/components/BookingView";
@@ -8,7 +9,7 @@ import {
 } from "@/features/collaborator-portal/services/portal.service";
 
 export const metadata: Metadata = {
-  title: "Agendar — physical",
+  title: `Agendar — ${brand.name}`,
 };
 
 export default async function CollaboratorAgendaPage() {

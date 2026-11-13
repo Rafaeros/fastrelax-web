@@ -44,10 +44,12 @@ export function SessionsCalendar({
   const weeks = buildCalendarGrid(month, sessions);
 
   return (
-    <Card padding="lg" className="flex flex-col gap-5">
+    <Card padding="sm" className="flex flex-col gap-4 sm:gap-5 sm:p-6 lg:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <h2 className="font-display text-xl text-ink-primary">{formatMonthLabel(month)}</h2>
+          <h2 className="font-display text-lg text-ink-primary sm:text-xl">
+            {formatMonthLabel(month)}
+          </h2>
           {pending && <Icon name="loader" className="h-4 w-4 animate-spin text-ink-tertiary" />}
         </div>
 
@@ -71,21 +73,21 @@ export function SessionsCalendar({
       </div>
 
       <div className="overflow-x-auto">
-        <div className="min-w-3xl">
-          <div className="grid grid-cols-7 gap-1.5 pb-2">
+        <div className="min-w-0 md:min-w-2xl">
+          <div className="grid grid-cols-7 gap-1 pb-2 sm:gap-1.5">
             {WEEKDAY_LABELS.map((label) => (
               <span
                 key={label}
-                className="text-center text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-ink-muted"
+                className="text-center text-[0.625rem] font-semibold uppercase tracking-[0.12em] text-ink-muted sm:text-[0.6875rem] sm:tracking-[0.14em]"
               >
                 {label}
               </span>
             ))}
           </div>
 
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1 sm:gap-1.5">
             {weeks.map((week) => (
-              <div key={week[0].date} className="grid grid-cols-7 gap-1.5">
+              <div key={week[0].date} className="grid grid-cols-7 gap-1 sm:gap-1.5">
                 {week.map((day) => (
                   <DayCell
                     key={day.date}
@@ -122,7 +124,7 @@ function DayCell({
       aria-pressed={selected}
       aria-label={`${day.dayOfMonth}: ${day.sessions.length} sessões`}
       className={cn(
-        "flex min-h-28 flex-col gap-1.5 rounded-control border p-2 text-left transition-colors",
+        "flex min-h-14 flex-col justify-between gap-1 rounded-control border p-1.5 text-left transition-colors sm:min-h-24 sm:justify-start sm:gap-1.5 sm:p-2 lg:min-h-28",
         "focus-visible:outline-none focus-visible:shadow-focus",
         day.inMonth ? "bg-surface-card" : "bg-bg-900/60",
         selected
@@ -132,7 +134,7 @@ function DayCell({
     >
       <span
         className={cn(
-          "flex h-6 w-6 items-center justify-center rounded-pill text-xs font-semibold tabular-nums",
+          "flex h-5 w-5 items-center justify-center rounded-pill text-[0.6875rem] font-semibold tabular-nums sm:h-6 sm:w-6 sm:text-xs",
           day.isToday && "bg-accent text-ink-inverse",
           !day.isToday && day.inMonth && "text-ink-primary",
           !day.isToday && !day.inMonth && "text-ink-tertiary",
@@ -141,7 +143,25 @@ function DayCell({
         {day.dayOfMonth}
       </span>
 
-      <span className="flex flex-col gap-1">
+      {/* No mobile exibe indicador compacto de pontos + contagem; de sm em diante mostra os horários. */}
+      {day.sessions.length > 0 && (
+        <span className="flex flex-wrap items-center gap-1 sm:hidden">
+          {visible.map((session) => (
+            <span
+              key={session.id}
+              aria-hidden="true"
+              className={cn("h-1.5 w-1.5 rounded-full", statusDotClass(session.status))}
+            />
+          ))}
+          {day.sessions.length > 3 && (
+            <span className="text-[0.625rem] leading-none font-medium tabular-nums text-ink-tertiary">
+              +{day.sessions.length - 3}
+            </span>
+          )}
+        </span>
+      )}
+
+      <span className="hidden flex-col gap-1 sm:flex">
         {visible.map((session) => (
           <span
             key={session.id}

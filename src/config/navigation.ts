@@ -82,10 +82,13 @@ export const MOBILE_TAB_LABELS: Partial<Record<string, string>> = {
   "/painel/colaboradores": "Equipe",
   "/painel/cadeiras": "Cadeiras",
   "/painel/empresas": "Empresas",
+  "/painel/planos": "Planos",
   "/painel/firmwares": "Firmware",
+  "/painel/faturas": "Faturas",
 };
 
 const COMPANY_ROLES: UserRole[] = ["COMPANY_ADMIN", "COMPANY_RH"];
+const BILLING_COMPANY_ROLES: UserRole[] = ["COMPANY_ADMIN", "COMPANY_RH", "COMPANY_OPERATOR"];
 
 /**
  * A ordem aqui é a da sidebar. Rotas mais específicas antes das mais curtas
@@ -110,6 +113,15 @@ export const PANEL_NAV: PanelNavItem[] = [
     roles: ["SYSADMIN"],
     mobilePrimary: true,
     icon: "building",
+  },
+  {
+    section: "Plataforma",
+    label: "Planos",
+    description: "Faixas de colaboradores, preço de cadeira adicional e taxa de implantação.",
+    href: "/painel/planos" as Route,
+    roles: ["SYSADMIN"],
+    mobilePrimary: true,
+    icon: "sheet",
   },
   {
     section: "Plataforma",
@@ -184,25 +196,62 @@ export const PANEL_NAV: PanelNavItem[] = [
   },
   {
     section: "Configurações",
+    label: "Faturas e assinatura",
+    description: "Plano contratado, faturas por ciclo, QR Code Pix e exportação LGPD.",
+    href: "/painel/faturas" as Route,
+    roles: BILLING_COMPANY_ROLES,
+    icon: "sheet",
+  },
+  {
+    section: "Configurações",
     label: "Minha empresa",
     description: "Dados cadastrais e o slug que os colaboradores usam no login.",
     href: "/painel/minha-empresa" as Route,
-    roles: COMPANY_ROLES,
+    roles: BILLING_COMPANY_ROLES,
     icon: "building",
   },
 ];
 
+/** Telas que continuam abertas quando a empresa está fora da operação plena. */
+export const BILLING_EXEMPT_ROUTES: string[] = ["/painel/faturas", "/painel/minha-empresa"];
+
+/**
+ * Empresa fora da operação plena por motivo financeiro: ainda sem plano pago
+ * (PENDING), suspensa após a carência ou com contrato cancelado. Em carência
+ * (PAST_DUE) a operação segue normal.
+ */
+export function isBillingRestricted(
+  user: Pick<AuthUser, "role" | "companyBillingStatus"> | null | undefined,
+): boolean {
+  if (!user || user.role === "SYSADMIN") return false;
+  const status = user.companyBillingStatus;
+  return status === "PENDING" || status === "SUSPENDED" || status === "CANCELLED";
+}
+
 /** O que este papel enxerga na sidebar e na barra de abas. */
-export function panelNavFor(user: Pick<AuthUser, "role"> | null | undefined): PanelNavItem[] {
+export function panelNavFor(
+  user: Pick<AuthUser, "role" | "companyBillingStatus"> | null | undefined,
+): PanelNavItem[] {
   if (!user) return [];
-  return PANEL_NAV.filter((item) => !item.roles || item.roles.includes(user.role));
+  const items = PANEL_NAV.filter((item) => !item.roles || item.roles.includes(user.role));
+
+  // Sem plano pago, suspensa ou cancelada: gestor e RH só alcançam as telas de
+  // regularização financeira e os dados da própria empresa — o mesmo recorte
+  // que o backend aplica (BillingSuspensionFilter).
+  if (isBillingRestricted(user)) {
+    return items.filter((item) => BILLING_EXEMPT_ROUTES.includes(item.href));
+  }
+
+  return items;
 }
 
 /**
  * Primeiro destino do papel, para onde mandar quem chega em `/painel` sem ter
  * uma visão geral. O SYSADMIN não tem: o painel de indicadores é de uma empresa.
  */
-export function panelHomeFor(user: Pick<AuthUser, "role"> | null | undefined): Route {
+export function panelHomeFor(
+  user: Pick<AuthUser, "role" | "companyBillingStatus"> | null | undefined,
+): Route {
   const [first] = panelNavFor(user);
   return (first?.href ?? "/painel") as Route;
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { redirect } from "next/navigation";
 import { Alert } from "@/components/ui";
 import { ProfileView } from "@/features/collaborator-portal/components/ProfileView";
@@ -8,7 +9,7 @@ import {
 } from "@/features/collaborator-portal/services/portal.service";
 
 export const metadata: Metadata = {
-  title: "Perfil — physical",
+  title: `Perfil — ${brand.name}`,
 };
 
 export default async function CollaboratorProfilePage() {

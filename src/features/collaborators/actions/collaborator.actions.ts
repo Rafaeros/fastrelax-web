@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { emptyPageSlice, toPageSlice, type PageSlice } from "@/lib/api/pagination.types";
 import {
+  anonymizeCollaborator,
   createCollaborator,
   deleteCollaborator,
   listCollaborators,
@@ -185,6 +186,13 @@ export async function toggleCollaboratorActiveAction(id: number): Promise<Mutati
 
 export async function deleteCollaboratorAction(id: number): Promise<MutationResult> {
   const result = await deleteCollaborator(id);
+  if (result.ok) revalidatePath("/painel/colaboradores");
+
+  return { ok: result.ok, message: result.message };
+}
+
+export async function anonymizeCollaboratorAction(id: number): Promise<MutationResult> {
+  const result = await anonymizeCollaborator(id);
   if (result.ok) revalidatePath("/painel/colaboradores");
 
   return { ok: result.ok, message: result.message };

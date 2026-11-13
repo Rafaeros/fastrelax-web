@@ -15,6 +15,7 @@ export const ROLE_LABELS: Record<UserRole, string> = {
   SYSADMIN: "Administrador da plataforma",
   COMPANY_ADMIN: "Gestor da empresa",
   COMPANY_RH: "RH da empresa",
+  COMPANY_OPERATOR: "Operador da cadeira",
 };
 
 /** Rótulo curto, para o badge do header, onde não cabe o nome inteiro. */
@@ -22,6 +23,7 @@ export const ROLE_SHORT_LABELS: Record<UserRole, string> = {
   SYSADMIN: "Physical",
   COMPANY_ADMIN: "Gestor",
   COMPANY_RH: "RH",
+  COMPANY_OPERATOR: "Operador",
 };
 
 /** Equipe da Physical. */

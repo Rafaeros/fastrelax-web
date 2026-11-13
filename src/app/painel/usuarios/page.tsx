@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { Alert } from "@/components/ui";
 import { emptyPageSlice, toPageSlice } from "@/lib/api/pagination.types";
 import { requirePanelUser } from "@/features/authentication/lib/guards";
@@ -9,7 +10,7 @@ import { listUsers } from "@/features/users/services/user.service";
 import type { CompanyOption, User } from "@/features/users/types/user.types";
 
 export const metadata: Metadata = {
-  title: "Usuários — physical",
+  title: `Usuários — ${brand.name}`,
 };
 
 export default async function UsuariosPage() {
@@ -28,8 +29,8 @@ export default async function UsuariosPage() {
     user.role === "SYSADMIN" ? await loadCompanyOptions() : [];
 
   return (
-    // Altura de uma tela: a lista rola dentro da tabela, o resto fica parado.
-    <div className="flex h-full min-h-0 flex-col gap-4">
+    // No desktop (lg+), a lista rola dentro da tabela; no celular, o <main> rola a página.
+    <div className="flex flex-col gap-4 lg:h-full lg:min-h-0">
       {!result.ok && (
         <Alert tone="error" title="Não foi possível carregar os usuários">
           {result.message}

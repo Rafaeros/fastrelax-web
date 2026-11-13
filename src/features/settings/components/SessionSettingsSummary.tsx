@@ -44,9 +44,17 @@ export function SessionSettingsSummary({ settings }: SessionSettingsSummaryProps
   ];
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-      {cards.map((card) => (
-        <Card key={card.label} padding="lg">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+      {cards.map((card, idx) => (
+        <Card
+          key={card.label}
+          padding="sm"
+          className={
+            idx === cards.length - 1
+              ? "max-sm:col-span-2 border-accent/25 bg-linear-to-br from-accent-strong/15 via-surface-card to-surface-card sm:p-6"
+              : "sm:p-6"
+          }
+        >
           <Stat value={card.value} label={card.label} icon={<Icon name={card.icon} />} />
         </Card>
       ))}

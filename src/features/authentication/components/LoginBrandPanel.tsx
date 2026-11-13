@@ -55,6 +55,8 @@ export function LoginBrandPanel({
           aspect="h-full"
           className="h-full"
           sizes="50vw"
+          // É o maior elemento da tela no desktop (o LCP): carrega sem esperar.
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg-950 via-bg-950/85 to-bg-950/55" />
         <div className="ambient-glow absolute inset-x-0 bottom-0 h-2/3" />

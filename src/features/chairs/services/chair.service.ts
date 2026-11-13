@@ -84,9 +84,13 @@ export async function renameChair(
   });
 }
 
-export async function toggleChairActive(id: number): Promise<ApiResult<Chair>> {
+export async function toggleChairActive(
+  id: number,
+  reason?: string,
+): Promise<ApiResult<Chair>> {
   return apiFetch<Chair>(`${RESOURCE}/${id}/toggle-active`, {
     method: "PATCH",
+    body: reason ? { reason } : undefined,
     token: await readAccessToken(),
   });
 }

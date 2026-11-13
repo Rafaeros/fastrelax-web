@@ -171,7 +171,7 @@ export function EvaluationsView({
       <EvaluationsSummary summary={summary} />
 
       <InfiniteDataTable
-        className="min-h-0 flex-1"
+        className="lg:min-h-0 lg:flex-1"
         title="Avaliações recebidas"
         columns={columns}
         initialSlice={initialSlice}

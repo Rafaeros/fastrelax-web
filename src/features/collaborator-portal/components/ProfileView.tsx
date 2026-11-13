@@ -99,6 +99,22 @@ export function ProfileView({ profile, windows }: ProfileViewProps) {
           </ul>
         )}
       </Card>
+
+      <Card padding="lg" className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <Icon name="shield" className="h-4 w-4 text-accent-soft" />
+          <h2 className="text-sm font-semibold text-ink-primary">
+            Privacidade e tratamento de dados (LGPD)
+          </h2>
+        </div>
+        <p className="text-xs leading-relaxed text-ink-secondary">
+          Seus dados cadastrais (nome, CPF, telefone, e-mail e departamento) e registros de uso das
+          cadeiras de massagem são tratados pela Physical exclusivamente em nome da sua empresa
+          empregadora (Controladora), para operação do benefício corporativo de bem-estar (art. 7º, V
+          da Lei nº 13.709/2018 — LGPD). Para atualização cadastral, portabilidade ou anonimização
+          após desligamento, entre em contato com o RH da sua empresa.
+        </p>
+      </Card>
     </div>
   );
 }

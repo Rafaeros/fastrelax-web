@@ -54,10 +54,15 @@ export function MyCompanyView({ company, error }: MyCompanyViewProps) {
   ];
 
   return (
-    <div className="flex flex-col gap-6">
-      <Card variant="elevated" padding="lg">
+    <div className="flex flex-col gap-5 sm:gap-6">
+      <Card
+        variant="elevated"
+        padding="md"
+        className="border-accent/25 bg-linear-to-br from-accent-strong/15 via-surface-card to-surface-card sm:p-8"
+      >
         <CardBody>
-          <CardTitle>Identificador de login</CardTitle>
+          <span className="eyebrow">Acesso dos colaboradores</span>
+          <CardTitle className="font-display text-xl sm:text-2xl">Identificador de login</CardTitle>
           <CardDescription>
             É isto que cada colaborador digita na tela de entrada, em vez do CNPJ. Para
             trocar, peça à Physical — o valor é o mesmo para todo mundo da empresa.
@@ -66,7 +71,7 @@ export function MyCompanyView({ company, error }: MyCompanyViewProps) {
         </CardBody>
       </Card>
 
-      <Card padding="lg">
+      <Card padding="md" className="sm:p-8">
         <CardBody>
           <CardTitle>Dados cadastrais</CardTitle>
           <DetailList items={items} className="mt-2" />

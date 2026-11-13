@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { redirect } from "next/navigation";
 import { Alert } from "@/components/ui";
 import { getCurrentCollaborator } from "@/features/collaborator-portal/services/portal.service";
@@ -6,7 +7,7 @@ import { NotificationList } from "@/features/notifications/components/Notificati
 import { listMyNotifications } from "@/features/notifications/services/notification.service";
 
 export const metadata: Metadata = {
-  title: "Notificações — physical",
+  title: `Notificações — ${brand.name}`,
 };
 
 /**

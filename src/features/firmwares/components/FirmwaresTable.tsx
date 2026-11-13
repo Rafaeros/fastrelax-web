@@ -119,7 +119,7 @@ export function FirmwaresTable({ initialSlice, loadPage }: FirmwaresTableProps) 
   return (
     <>
       <InfiniteDataTable
-        className="min-h-0 flex-1"
+        className="lg:min-h-0 lg:flex-1"
         title="Catálogo de firmwares"
         columns={columns}
         initialSlice={initialSlice}

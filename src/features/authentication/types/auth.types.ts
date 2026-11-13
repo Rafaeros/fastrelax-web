@@ -20,7 +20,11 @@ export type AuthSession = {
  * operacional (colaborador, sessão, notificação). Os dois papéis `COMPANY_*`
  * vivem dentro de uma empresa e só veem o que é dela.
  */
-export type UserRole = "SYSADMIN" | "COMPANY_ADMIN" | "COMPANY_RH";
+export type UserRole = "SYSADMIN" | "COMPANY_ADMIN" | "COMPANY_RH" | "COMPANY_OPERATOR";
+
+export type CompanyType = "CORPORATE" | "OPERATOR";
+
+export type BillingStatus = "PENDING" | "ACTIVE" | "PAST_DUE" | "SUSPENDED" | "CANCELLED";
 
 /** Espelha `UserResponseDTO` (`GET /users/me`). */
 export type AuthUser = {
@@ -33,6 +37,10 @@ export type AuthUser = {
   /** Nulo para a equipe da plataforma, que não pertence a nenhuma empresa. */
   companyId: number | null;
   companyName: string | null;
+  companyType?: CompanyType | null;
+  companyBillingStatus?: BillingStatus | null;
+  companyBillingStatusLabel?: string | null;
+  companyGraceUntil?: string | null;
   mustChangePassword: boolean;
   active: boolean;
 };

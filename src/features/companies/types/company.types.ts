@@ -1,4 +1,5 @@
 import type { PageParams } from "@/lib/api/pagination.types";
+import type { BillingStatus, CompanyType } from "@/features/authentication/types/auth.types";
 
 /** Espelha `CompanyResponseDTO` do fastrelax-api. */
 export type Company = {
@@ -11,6 +12,11 @@ export type Company = {
   email: string;
   phone: string;
   active: boolean;
+  type?: CompanyType;
+  typeLabel?: string;
+  billingStatus?: BillingStatus;
+  billingStatusLabel?: string;
+  graceUntil?: string | null;
   addressId: number | null;
   cep: string | null;
   street: string | null;

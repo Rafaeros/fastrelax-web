@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { Alert, Card, Icon } from "@/components/ui";
 import { CurrentSessionCard } from "@/features/collaborator-portal/components/CurrentSessionCard";
 import { MonthlyUsageChart } from "@/features/collaborator-portal/components/MonthlyUsageChart";
@@ -12,7 +13,7 @@ import { PendingEvaluationPrompt } from "@/features/evaluations/components/Pendi
 import { getPendingEvaluation } from "@/features/evaluations/services/evaluation.service";
 
 export const metadata: Metadata = {
-  title: "Início — physical",
+  title: `Início — ${brand.name}`,
 };
 
 /** Cartões de números: o que o colaborador confere de relance. */

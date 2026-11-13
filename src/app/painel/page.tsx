@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { requireCompanyUser } from "@/features/authentication/lib/guards";
 import { DashboardView } from "@/features/dashboard/components/DashboardView";
 import { getDashboardSummary } from "@/features/dashboard/services/dashboard.service";
 import { emptyDashboardSummary } from "@/features/dashboard/types/dashboard.types";
 
 export const metadata: Metadata = {
-  title: "Painel — physical",
+  title: `Painel — ${brand.name}`,
 };
 
 export default async function PainelPage() {
@@ -17,10 +18,13 @@ export default async function PainelPage() {
   const result = await getDashboardSummary();
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="font-display text-3xl text-ink-primary">
-        Olá, {user.name}
-      </h1>
+    <div className="flex flex-col gap-6 sm:gap-8">
+      <div className="flex flex-col gap-1">
+        <span className="eyebrow">{user.companyName ?? "Visão geral"}</span>
+        <h1 className="font-display text-2xl text-ink-primary sm:text-3xl">
+          Olá, {user.name}
+        </h1>
+      </div>
 
       <DashboardView
         initialSummary={result.ok ? result.data : emptyDashboardSummary()}

@@ -207,7 +207,7 @@ export function SessionSettingsForm({ settings, onSaved }: SessionSettingsFormPr
           />
         </div>
 
-        <div className="flex items-center justify-between gap-4 border-t border-line pt-5">
+        <div className="flex flex-col items-stretch justify-between gap-3 border-t border-line pt-5 sm:flex-row sm:items-center">
           <span className="text-xs text-ink-tertiary">
             {settings.updatedAt
               ? `Última alteração em ${formatLongDate(settings.updatedAt)}`
@@ -217,10 +217,8 @@ export function SessionSettingsForm({ settings, onSaved }: SessionSettingsFormPr
           <Button
             type="submit"
             size="sm"
-            disabled={pending}
-            trailingIcon={
-              pending ? <Icon name="loader" className="h-4 w-4 animate-spin" /> : undefined
-            }
+            loading={pending}
+            className="w-full sm:w-auto"
           >
             {pending ? "Salvando..." : "Salvar alterações"}
           </Button>

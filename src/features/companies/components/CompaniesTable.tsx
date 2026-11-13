@@ -21,6 +21,7 @@ import {
   toggleCompanyActiveAction,
 } from "@/features/companies/actions/company.actions";
 import { PushCompanyNetworkAction } from "@/features/chairs/components/PushCompanyNetworkAction";
+import { CompanyBillingModal } from "@/features/billing/components/CompanyBillingModal";
 import { CompaniesFilterModal } from "@/features/companies/components/CompaniesFilterModal";
 import { CreateCompanyModal } from "@/features/companies/components/CreateCompanyModal";
 import { EditCompanyModal } from "@/features/companies/components/EditCompanyModal";
@@ -45,6 +46,7 @@ export function CompaniesTable({ initialSlice, states, loadPage }: CompaniesTabl
   // e montar um diálogo por registro encheria o DOM à toa.
   const [viewing, setViewing] = useState<Company | null>(null);
   const [editing, setEditing] = useState<Company | null>(null);
+  const [billingCompany, setBillingCompany] = useState<Company | null>(null);
   const toast = useToast();
 
   const reload = () => setReloadSignal((current) => current + 1);
@@ -112,14 +114,36 @@ export function CompaniesTable({ initialSlice, states, loadPage }: CompaniesTabl
         ),
       },
       {
+        id: "billing",
+        header: "Cobrança",
+        cell: (row) => (
+          <Badge
+            tone={
+              row.billingStatus === "SUSPENDED" || row.billingStatus === "CANCELLED"
+                ? "error"
+                : row.billingStatus === "PAST_DUE" || row.billingStatus === "PENDING"
+                  ? "warning"
+                  : "success"
+            }
+          >
+            {row.billingStatusLabel ?? "Em dia"}
+          </Badge>
+        ),
+      },
+      {
         id: "actions",
         header: "Ações",
         align: "right",
-        width: "w-40",
+        width: "w-44",
         cell: (row) => (
           <RowActions>
             <ViewAction onClick={() => setViewing(row)} />
             <EditAction onClick={() => setEditing(row)} />
+            <RowAction
+              label="Assinatura e faturas"
+              icon="sheet"
+              onClick={() => setBillingCompany(row)}
+            />
             <PushCompanyNetworkAction
               companyId={row.id}
               wifiConfigured={row.wifiConfigured}
@@ -165,7 +189,7 @@ export function CompaniesTable({ initialSlice, states, loadPage }: CompaniesTabl
   return (
     <>
       <InfiniteDataTable
-        className="min-h-0 flex-1"
+        className="lg:min-h-0 lg:flex-1"
         title="Lista de empresas"
         columns={columns}
         initialSlice={initialSlice}
@@ -205,6 +229,12 @@ export function CompaniesTable({ initialSlice, states, loadPage }: CompaniesTabl
         company={editing}
         states={states}
         onClose={() => setEditing(null)}
+        onUpdated={reload}
+      />
+
+      <CompanyBillingModal
+        company={billingCompany}
+        onClose={() => setBillingCompany(null)}
         onUpdated={reload}
       />
     </>

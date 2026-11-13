@@ -153,22 +153,24 @@ export function PanelTabBar({ items, homeHref }: PanelTabBarProps) {
             );
           })}
 
-          <li className="flex-1">
-            <button
-              type="button"
-              onClick={toggleMenu}
-              aria-expanded={menuOpen}
-              aria-controls="panel-more-menu"
-              className={cn(
-                "flex min-h-14 w-full flex-col items-center justify-center gap-1 px-1 py-2",
-                "focus-visible:outline-none focus-visible:shadow-focus",
-                menuOpen || secondaryActive ? "text-accent-soft" : "text-ink-muted",
-              )}
-            >
-              <Icon name={menuOpen ? "close" : "menu"} className="h-5 w-5 shrink-0" />
-              <span className="text-[0.6875rem] leading-none font-medium">Mais</span>
-            </button>
-          </li>
+          {secondaryItems.length > 0 && (
+            <li className="flex-1">
+              <button
+                type="button"
+                onClick={toggleMenu}
+                aria-expanded={menuOpen}
+                aria-controls="panel-more-menu"
+                className={cn(
+                  "flex min-h-14 w-full flex-col items-center justify-center gap-1 px-1 py-2",
+                  "focus-visible:outline-none focus-visible:shadow-focus",
+                  menuOpen || secondaryActive ? "text-accent-soft" : "text-ink-muted",
+                )}
+              >
+                <Icon name={menuOpen ? "close" : "menu"} className="h-5 w-5 shrink-0" />
+                <span className="text-[0.6875rem] leading-none font-medium">Mais</span>
+              </button>
+            </li>
+          )}
         </ul>
       </nav>
     </>

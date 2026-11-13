@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { MyCompanyView } from "@/features/companies/components/MyCompanyView";
 import { getMyCompany } from "@/features/companies/services/company.service";
 import { requireCompanyUser } from "@/features/authentication/lib/guards";
 
 export const metadata: Metadata = {
-  title: "Minha empresa — physical",
+  title: `Minha empresa — ${brand.name}`,
 };
 
 export default async function MinhaEmpresaPage() {
   // Cadastro é da Physical (evita CNPJ ou slug errados derrubando o acesso de
   // todo mundo). O RH/admin do cliente só consulta, principalmente o slug que
   // os colaboradores digitam no login.
-  await requireCompanyUser();
+  await requireCompanyUser({ billingExempt: true });
 
   const result = await getMyCompany();
 

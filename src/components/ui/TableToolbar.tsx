@@ -85,9 +85,10 @@ export function TableToolbar({
 
       {/*
         Os botões dividem a largura no mobile ([&>*]:flex-1) para virarem alvos
-        de toque largos, e voltam ao tamanho natural a partir de sm.
+        de toque largos, quebram linha quando há mais de dois e voltam ao tamanho
+        natural a partir de sm.
       */}
-      <div className="flex items-center gap-2 [&>*]:flex-1 sm:[&>*]:flex-none">
+      <div className="flex flex-wrap items-center gap-2 [&>*]:flex-1 sm:[&>*]:flex-none">
         {filter}
         {children}
         {primaryAction}

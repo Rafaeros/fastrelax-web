@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import Link from "next/link";
 import { Alert, Card, Logo } from "@/components/ui";
 import { describeRecoveryTokenAction } from "@/features/authentication/actions/recovery.actions";
 import { ResetPasswordForm } from "@/features/authentication/components/ResetPasswordForm";
 
 export const metadata: Metadata = {
-  title: "Definir senha — physical",
+  title: `Definir senha — ${brand.name}`,
 };
 
 /**

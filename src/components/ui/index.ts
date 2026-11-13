@@ -79,3 +79,6 @@ export type { MediaProps } from "@/components/ui/Media";
 
 export { Logo } from "@/components/ui/Logo";
 export type { LogoProps } from "@/components/ui/Logo";
+
+export { CreditCardPreview } from "@/components/ui/CreditCardPreview";
+export type { CreditCardPreviewProps, CreditCardField } from "@/components/ui/CreditCardPreview";

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import Link from "next/link";
 import { Card, Icon, Logo } from "@/components/ui";
 import { ForgotPasswordForm } from "@/features/authentication/components/ForgotPasswordForm";
 
 export const metadata: Metadata = {
-  title: "Recuperar senha — physical",
+  title: `Recuperar senha — ${brand.name}`,
 };
 
 /** Recuperação do painel: o e-mail é único no sistema inteiro. */

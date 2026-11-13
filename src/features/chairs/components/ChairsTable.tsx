@@ -197,7 +197,16 @@ export function ChairsTable({
                 label={row.active ? "Desativar" : "Ativar"}
                 icon={row.active ? "eyeOff" : "check"}
                 onClick={async () => {
-                  const result = await toggleChairActiveAction(row.id);
+                  let reason: string | undefined;
+                  if (row.active) {
+                    const prompted = window.prompt(
+                      `Informe o motivo técnico para desativar a cadeira "${row.name}" (ex.: manutenção, equipamento recolhido):`,
+                      "Manutenção técnica",
+                    );
+                    if (prompted === null) return;
+                    reason = prompted.trim() || "Desativação técnica manual";
+                  }
+                  const result = await toggleChairActiveAction(row.id, reason);
                   if (result.ok) {
                     reload();
                     toast.success(result.message);
@@ -232,7 +241,7 @@ export function ChairsTable({
   return (
     <>
       <InfiniteDataTable
-        className="min-h-0 flex-1"
+        className="lg:min-h-0 lg:flex-1"
         title="Lista de cadeiras"
         columns={columns}
         initialSlice={initialSlice}

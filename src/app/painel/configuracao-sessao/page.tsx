@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { SessionSettingsView } from "@/features/settings/components/SessionSettingsView";
 import { getSessionSettings } from "@/features/settings/services/session-settings.service";
 import { fallbackSessionSettings } from "@/features/settings/types/session-settings.types";
 import { requireCompanyUser } from "@/features/authentication/lib/guards";
 
 export const metadata: Metadata = {
-  title: "Configuração da sessão — physical",
+  title: `Configuração da sessão — ${brand.name}`,
 };
 
 export default async function ConfiguracaoSessaoPage() {

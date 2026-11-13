@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import Link from "next/link";
 import { Alert, Card, Icon, Logo } from "@/components/ui";
 import { ForgotPasswordForm } from "@/features/authentication/components/ForgotPasswordForm";
 
 export const metadata: Metadata = {
-  title: "Recuperar senha — physical",
+  title: `Recuperar senha — ${brand.name}`,
 };
 
 /**

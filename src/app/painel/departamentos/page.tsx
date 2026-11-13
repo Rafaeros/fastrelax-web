@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/config/brand";
 import { Alert } from "@/components/ui";
 import { emptyPageSlice, toPageSlice } from "@/lib/api/pagination.types";
 import { fetchDepartmentsPage } from "@/features/departments/actions/department.actions";
@@ -8,7 +9,7 @@ import type { Department } from "@/features/departments/types/department.types";
 import { requireCompanyUser } from "@/features/authentication/lib/guards";
 
 export const metadata: Metadata = {
-  title: "Departamentos — physical",
+  title: `Departamentos — ${brand.name}`,
 };
 
 export default async function DepartamentosPage() {
@@ -19,8 +20,8 @@ export default async function DepartamentosPage() {
   const initialSlice = result.ok ? toPageSlice(result.data) : emptyPageSlice<Department>();
 
   return (
-    // Altura de uma tela: a lista rola dentro da tabela, o resto fica parado.
-    <div className="flex h-full min-h-0 flex-col gap-4">
+    // No desktop (lg+), a lista rola dentro da tabela; no celular, o <main> rola a página.
+    <div className="flex flex-col gap-4 lg:h-full lg:min-h-0">
       {!result.ok && (
         <Alert tone="error" title="Não foi possível carregar os departamentos">
           {result.message}

@@ -126,7 +126,7 @@ export function DepartmentsTable({ initialSlice, loadPage }: DepartmentsTablePro
   return (
     <>
       <InfiniteDataTable
-        className="min-h-0 flex-1"
+        className="lg:min-h-0 lg:flex-1"
         title="Lista de departamentos"
         columns={columns}
         initialSlice={initialSlice}

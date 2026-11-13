@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition, type FormEvent } from "react";
+import { createPortal } from "react-dom";
 import { Button, Icon, IconButton, Input, Modal, useToast } from "@/components/ui";
 import { quickCreateDepartmentAction } from "@/features/departments/actions/department.actions";
 import type { Department } from "@/features/departments/types/department.types";
@@ -39,10 +40,9 @@ export function QuickCreateDepartmentButton({
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Este form nasce dentro do form de colaborador (o modal abre a partir de
-    // lá). Sem isto, o "submit" borbulha e também dispara o onSubmit do form
-    // de fora — que tenta cadastrar o colaborador junto, com os campos como
-    // estiverem naquele instante.
+    // No DOM este form fica no <body> (portal, ver abaixo), mas eventos do
+    // React seguem a árvore de componentes: sem isto o "submit" borbulharia
+    // até o onSubmit do form de colaborador e cadastraria o colaborador junto.
     event.stopPropagation();
     setError(undefined);
 
@@ -69,6 +69,13 @@ export function QuickCreateDepartmentButton({
         disabled={disabled}
       />
 
+      {/*
+        Portal no <body>: o botão vive dentro do <form> de colaborador, e um
+        <form> dentro de outro é HTML inválido (erro de hidratação, e Enter no
+        campo enviaria o form de fora). Só existe aberto, então nunca roda no
+        servidor e não precisa esperar montar para achar o document.
+      */}
+      {open && createPortal(
       <Modal
         open={open}
         onClose={close}
@@ -115,7 +122,9 @@ export function QuickCreateDepartmentButton({
             leadingIcon={<Icon name="dashboard" />}
           />
         </form>
-      </Modal>
+      </Modal>,
+      document.body,
+      )}
     </>
   );
 }

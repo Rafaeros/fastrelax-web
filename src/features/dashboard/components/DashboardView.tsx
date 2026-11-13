@@ -26,7 +26,7 @@ export function DashboardView({ initialSummary, initialError }: DashboardViewPro
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
         <p className="text-sm text-ink-secondary">
           {summary.from && summary.to
             ? `De ${formatLongDate(summary.from)} a ${formatLongDate(summary.to)}`
@@ -34,7 +34,11 @@ export function DashboardView({ initialSummary, initialError }: DashboardViewPro
         </p>
 
         {/* Filtro numa linha só, acima dos gráficos. */}
-        <div className="flex items-center gap-2" role="group" aria-label="Período">
+        <div
+          className="flex flex-wrap items-center gap-2 [&>button]:flex-1 sm:[&>button]:flex-none"
+          role="group"
+          aria-label="Período"
+        >
           {pending && <Icon name="loader" className="h-4 w-4 animate-spin text-ink-tertiary" />}
           {DASHBOARD_PERIODS.map((option) => (
             <button
