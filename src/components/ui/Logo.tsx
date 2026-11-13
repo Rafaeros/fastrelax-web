@@ -33,7 +33,7 @@ export function Logo({ className, height = 30, priority, variant = "full" }: Log
           className="grid shrink-0 place-items-center rounded-full bg-gradient-to-br from-copper-300 to-copper-700 font-bold text-ink-inverse"
           style={{ height, width: height, fontSize: height * 0.45 }}
         >
-          p
+          f
         </span>
         {!isMark && (
           <span className="text-lg font-semibold tracking-tight text-ink-primary">
@@ -53,8 +53,13 @@ export function Logo({ className, height = 30, priority, variant = "full" }: Log
       height={height}
       priority={priority}
       onError={() => setFailed(true)}
-      className={cn("w-auto", className)}
-      style={{ height }}
+      className={className}
+      // As duas medidas fixas e iguais aos atributos. Com `width: auto` a
+      // largura real sai fracionária (141,76px) e o navegador a arredonda para
+      // um inteiro diferente do atributo, o que o next/image acusa como "só um
+      // lado alterado". Num SVG isso não distorce nada: o preserveAspectRatio
+      // padrão encaixa o desenho, e a sobra fica abaixo de 1px.
+      style={{ height, width }}
     />
   );
 }

@@ -42,8 +42,9 @@ self.addEventListener("push", (event) => {
     self.registration.showNotification(payload.title, {
       body: payload.body,
       // Marca reduzida: é o que fica legível no tamanho de um ícone de aviso.
-      icon: "/brand/logo-physical-mark.png",
-      badge: "/brand/logo-physical-mark.png",
+      icon: "/brand/fastrelax-mark-192.png",
+      // Badge: o Android usa só o alfa, então vai o símbolo em branco.
+      badge: "/brand/fastrelax-badge-96.png",
       // Avisos do mesmo assunto se substituem em vez de empilhar.
       tag: payload.tag || "fastrelax",
       renotify: true,
