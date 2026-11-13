@@ -11,17 +11,17 @@ const REASONS: { icon: IconName; title: string; description: string }[] = [
   {
     icon: "shield",
     title: "Dados protegidos",
-    description: "Acesso individual pelo app e histórico de sessões visível só para quem precisa.",
+    description: "CPF cifrado no banco, acesso individual e cada empresa vê só os próprios dados.",
   },
   {
     icon: "users",
     title: "Adesão real",
-    description: "Fluxo simples faz o colaborador voltar — não é benefício de gaveta.",
+    description: "Reservar leva três toques, então o colaborador volta na semana seguinte.",
   },
   {
     icon: "wrench",
     title: "Operação sem esforço",
-    description: "Instalação, manutenção e suporte por nossa conta, do primeiro dia em diante.",
+    description: "Instalamos o módulo que conecta a cadeira, atualizamos e damos suporte a partir do primeiro dia.",
   },
 ];
 
@@ -45,8 +45,8 @@ export function WhyChoose() {
           {REASONS.map((reason) => (
             <div key={reason.title} className="flex flex-col items-center gap-3 text-center">
               <Icon name={reason.icon} className="h-8 w-8 text-accent-soft" />
-              <h3 className="text-sm font-semibold text-ink-primary">{reason.title}</h3>
-              <p className="max-w-xs text-xs leading-relaxed text-ink-secondary">
+              <h3 className="text-base font-semibold text-ink-primary">{reason.title}</h3>
+              <p className="max-w-xs text-sm leading-relaxed text-ink-secondary">
                 {reason.description}
               </p>
             </div>

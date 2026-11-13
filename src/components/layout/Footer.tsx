@@ -1,64 +1,74 @@
+import type { Route } from "next";
+import Link from "next/link";
 import { Container, Logo } from "@/components/ui";
-import { brand } from "@/config/brand";
+import { brand, contact } from "@/config/brand";
 
-const COLUMNS = [
+const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: "Produto",
-    links: ["A cadeira", "Programas de sessão", "App do colaborador", "Painel de RH"],
+    links: [
+      { label: "Programas", href: "/#programas" },
+      { label: "Como funciona", href: "/#como-funciona" },
+      { label: "Painel de RH", href: "/#plataforma" },
+    ],
   },
   {
-    title: "Empresa",
-    links: ["Sobre a physical", "Casos de uso", "Manutenção e suporte", "Contato"],
+    title: "Acesso",
+    links: [
+      { label: "Área do colaborador", href: "/colaborador/entrar" },
+      { label: "Área da empresa", href: "/entrar" },
+      { label: "Fale com a gente", href: "/contato" },
+    ],
   },
   {
-    title: "Recursos",
-    links: ["Guia de implantação", "Boas práticas de bem-estar", "Perguntas frequentes"],
+    title: "Legal",
+    links: [
+      { label: "Termos de uso", href: "/termos-de-uso" },
+      { label: "Privacidade e LGPD", href: "/privacidade" },
+    ],
   },
 ];
 
+const linkClass =
+  "text-sm text-ink-secondary underline decoration-transparent underline-offset-4 transition-colors hover:text-ink-primary hover:decoration-accent-soft";
+
 export function Footer() {
   return (
-    <footer id="contato" className="border-t border-line bg-surface-nav">
+    <footer className="border-t border-line bg-surface-nav">
       <Container size="wide" className="py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div className="flex flex-col gap-4">
             <Logo height={28} />
             <p className="max-w-xs text-sm leading-relaxed text-ink-secondary">
               {brand.tagline}. Pausas curtas, agendadas pelo próprio colaborador e acompanhadas pelo
               RH.
             </p>
+            <a href={`mailto:${contact.salesEmail}`} className={linkClass}>
+              {contact.salesEmail}
+            </a>
           </div>
 
           {COLUMNS.map((column) => (
-            <div key={column.title} className="flex flex-col gap-4">
-              <h3 className="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-ink-muted">
-                {column.title}
-              </h3>
+            <nav key={column.title} aria-label={column.title} className="flex flex-col gap-4">
+              <h2 className="text-sm font-semibold text-ink-primary">{column.title}</h2>
               <ul className="flex flex-col gap-2.5">
                 {column.links.map((link) => (
-                  <li key={link}>
-                    {/* Sem rota definida ainda — âncoras entram junto com as páginas internas. */}
-                    <span className="text-sm text-ink-secondary transition-colors hover:text-ink-primary">
-                      {link}
-                    </span>
+                  <li key={link.href}>
+                    <Link href={link.href as Route} className={linkClass}>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
         </div>
 
         <div className="hairline my-10" />
 
-        <div className="flex flex-col gap-3 text-xs text-ink-tertiary sm:flex-row sm:items-center sm:justify-between">
-          <span>
-            © {new Date().getFullYear()} {brand.name}. Todos os direitos reservados.
-          </span>
-          <span className="flex gap-6">
-            <span>Privacidade</span>
-            <span>Termos de uso</span>
-          </span>
-        </div>
+        <p className="text-xs text-ink-tertiary">
+          © {new Date().getFullYear()} {brand.name}. Todos os direitos reservados.
+        </p>
       </Container>
     </footer>
   );

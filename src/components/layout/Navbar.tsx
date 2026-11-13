@@ -5,15 +5,25 @@ import { useEffect, useState } from "react";
 import { Button, buttonStyles, Container, Icon, Logo } from "@/components/ui";
 import { cn } from "@/lib/cn";
 
+// Caminho absoluto ("/#...") para os links funcionarem também a partir de
+// /contato e das páginas legais, não só dentro da própria landing.
 const NAV_LINKS = [
-  { label: "Início", href: "#inicio" },
-  { label: "A cadeira", href: "#cadeira" },
-  { label: "Plataforma", href: "#plataforma" },
-  { label: "Como funciona", href: "#como-funciona" },
-  { label: "Contato", href: "#contato" },
+  { label: "Programas", href: "/#programas" },
+  { label: "Como funciona", href: "/#como-funciona" },
+  { label: "Painel de RH", href: "/#plataforma" },
+  { label: "Contato", href: "/contato" },
 ];
 
-export function Navbar() {
+type NavbarProps = {
+  /**
+   * Mostra a barra também abaixo de lg. Na landing ela some no celular porque
+   * o MobileAccessCard ocupa a primeira tela; nas páginas internas não existe
+   * esse cartão, e sem a barra não haveria caminho de volta.
+   */
+  alwaysVisible?: boolean;
+};
+
+export function Navbar({ alwaysVisible = false }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -29,7 +39,7 @@ export function Navbar() {
       className={cn(
         // Some no celular: ali a primeira tela é o MobileAccessCard, e uma
         // barra fixa só custaria altura para esconder o menu num hambúrguer.
-        "hidden lg:block",
+        alwaysVisible ? "block" : "hidden lg:block",
         "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
         scrolled || menuOpen
           ? "border-b border-line/70 bg-surface-base/85 backdrop-blur-lg"
@@ -38,13 +48,9 @@ export function Navbar() {
     >
       <Container size="wide">
         <nav className="flex h-18 items-center justify-between gap-4 py-4 lg:gap-6">
-          <a
-            href="#inicio"
-            className="flex shrink-0 items-center"
-            aria-label={`${"physical"} — início`}
-          >
+          <Link href="/" className="flex shrink-0 items-center" aria-label="Página inicial">
             <Logo priority />
-          </a>
+          </Link>
 
           {/* gap menor a partir de lg: os 5 links dividem o espaço que sobra
               entre a logo e as ações, e 8 unidades estouravam em 1024px. */}
@@ -69,30 +75,29 @@ export function Navbar() {
           */}
           <div className="flex shrink-0 items-center gap-2">
             {/* Colaborador em destaque: é quem entra todo dia, enquanto o
-                acesso do RH é ocasional. */}
-            <Link
-              href="/colaborador/entrar"
-              className={buttonStyles({
-                variant: "primary",
-                size: "sm",
-                className: "hidden whitespace-nowrap sm:inline-flex",
-              })}
-            >
-              <Icon name="users" className="h-4 w-4" />
-              Colaborador
-            </Link>
+                acesso do RH é ocasional.
 
-            <Link
-              href="/entrar"
-              className={buttonStyles({
-                variant: "secondary",
-                size: "sm",
-                className: "hidden whitespace-nowrap sm:inline-flex",
-              })}
-            >
-              <Icon name="lock" className="h-4 w-4" />
-              Empresa
-            </Link>
+                A visibilidade fica num contêiner próprio: o `cn` só concatena
+                classes, então "hidden" passado ao buttonStyles perdia para o
+                "inline-flex" do botão e os dois apareciam no celular,
+                empurrando o botão de menu para fora da tela. */}
+            <div className="hidden items-center gap-2 sm:flex">
+              <Link
+                href="/colaborador/entrar"
+                className={buttonStyles({ variant: "primary", size: "sm", className: "whitespace-nowrap" })}
+              >
+                <Icon name="users" className="h-4 w-4" />
+                Colaborador
+              </Link>
+
+              <Link
+                href="/entrar"
+                className={buttonStyles({ variant: "secondary", size: "sm", className: "whitespace-nowrap" })}
+              >
+                <Icon name="lock" className="h-4 w-4" />
+                Empresa
+              </Link>
+            </div>
 
             <Button
               variant="ghost"

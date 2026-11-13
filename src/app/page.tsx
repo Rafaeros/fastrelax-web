@@ -2,7 +2,6 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { AccessAreas } from "@/components/landing/AccessAreas";
 import { MobileAccessCard } from "@/components/landing/MobileAccessCard";
-import { Benefits } from "@/components/landing/Benefits";
 import { ContactCta } from "@/components/landing/ContactCta";
 import { Hero } from "@/components/landing/Hero";
 import { HowItWorks } from "@/components/landing/HowItWorks";
@@ -20,12 +19,11 @@ export default function Home() {
             navbar por cima. Cada um esconde o outro por breakpoint. */}
         <MobileAccessCard />
         <Hero />
-        <Benefits />
+        <HowItWorks />
         <Programs />
         <Platform />
-        <AccessAreas />
-        <HowItWorks />
         <WhyChoose />
+        <AccessAreas />
         <ContactCta />
       </main>
       <Footer />

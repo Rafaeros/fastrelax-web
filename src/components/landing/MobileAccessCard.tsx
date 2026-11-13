@@ -63,7 +63,7 @@ export function MobileAccessCard() {
       </Card>
 
       <a
-        href="#cadeira"
+        href="#como-funciona"
         className="flex flex-col items-center gap-1 text-xs text-ink-tertiary"
       >
         Conhecer o programa

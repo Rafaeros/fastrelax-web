@@ -1,93 +1,69 @@
 import type { Route } from "next";
-import { ButtonLink, Container, Icon, Media, StatGroup } from "@/components/ui";
+import { ButtonLink, Container, Icon, Media } from "@/components/ui";
+import { FadeIn } from "@/components/motion/FadeIn";
+import { TextReveal } from "@/components/motion/TextReveal";
 import { assets } from "@/config/brand";
-
-const STATS = [
-  { value: "12 min", label: "Sessão média", icon: <Icon name="clock" /> },
-  { value: "+2.400", label: "Colaboradores", icon: <Icon name="users" /> },
-  { value: "4,9/5", label: "Satisfação", icon: <Icon name="heart" /> },
-];
+import { HeroStage } from "./HeroStage";
 
 export function Hero() {
   return (
     // O respiro do topo só existe a partir de lg, onde a navbar fixa cobre o
     // início da seção. No celular ela não é renderizada, e o Hero entra logo
     // depois do cartão de acesso.
-    <section id="inicio" className="relative overflow-hidden pt-10 pb-14 lg:pt-40 lg:pb-28">
-      {/* Fundo: foto do ambiente + brilho ambiente + fade para o corpo da página */}
+    <section
+      id="inicio"
+      className="relative flex min-h-[100svh] items-center overflow-hidden py-14 lg:pt-28 lg:pb-16"
+    >
+      {/* Fundo: escritório desfocado, quase apagado — contexto, não assunto. */}
       <div className="absolute inset-0 -z-10">
-        <Media
-          src={assets.heroBackground}
-          alt=""
-          aspect="h-full"
-          className="h-full"
-          sizes="100vw"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-bg-950 via-bg-950/85 to-bg-950/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg-950 via-transparent to-bg-950/70" />
-        <div className="ambient-glow absolute inset-x-0 bottom-0 h-2/3" />
+        <Media src={assets.heroBackground} alt="" aspect="h-full" className="h-full opacity-60" sizes="100vw" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-bg-950 via-bg-950/90 to-bg-950/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg-950 via-transparent to-bg-950/80" />
       </div>
 
       <Container size="wide">
-        <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
-          <div className="flex flex-col gap-5 sm:gap-7">
-            <span className="eyebrow">Bem-estar corporativo</span>
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12">
+          <div className="flex flex-col gap-6 sm:gap-8">
+            <TextReveal
+              text="Massagem dentro da empresa, no horário que o colaborador escolhe."
+              className="font-display text-[2.4rem] leading-[1.06] text-ink-primary sm:text-[3.2rem] xl:text-[3.6rem]"
+            />
 
-            <h1 className="font-display text-[2.5rem] leading-[1.05] text-ink-primary sm:text-6xl">
-              Descanso
-              <br />
-              <span className="text-gradient-accent">Redefinido.</span>
-            </h1>
-
-            <p className="max-w-md text-base leading-relaxed text-ink-secondary">
-              Cadeiras de massagem profissionais dentro da sua empresa, com agendamento pelo app do
-              colaborador e acompanhamento completo pelo RH.
-            </p>
+            <FadeIn delay={0.55}>
+              <p className="max-w-[34rem] text-base leading-relaxed text-ink-secondary sm:text-lg">
+                Instalamos cadeiras de massagem profissionais no seu escritório. O colaborador reserva
+                pelo app, inicia a sessão pelo celular e o RH acompanha o uso pelo painel.
+              </p>
+            </FadeIn>
 
             {/*
               Empilhados e de largura total no celular: lado a lado, cada botão
               ficava com metade de 335px e o rótulo quebrava em duas linhas.
             */}
-            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <FadeIn delay={0.7} className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <ButtonLink
-                href={"/colaborador/entrar" as Route}
+                href={"/contato" as Route}
                 size="lg"
                 fullWidth
                 className="sm:w-auto"
                 trailingIcon={<Icon name="arrowRight" className="h-4 w-4" />}
               >
-                Agendar massagem
+                Solicitar proposta
               </ButtonLink>
               <ButtonLink
-                href={"#plataforma" as Route}
+                href={"/colaborador/entrar" as Route}
                 variant="secondary"
                 size="lg"
                 fullWidth
                 className="sm:w-auto"
-                leadingIcon={<Icon name="play" className="h-4 w-4" />}
+                leadingIcon={<Icon name="calendar" className="h-4 w-4" />}
               >
-                Conhecer a plataforma
+                Agendar minha massagem
               </ButtonLink>
-            </div>
-
-            <div className="hairline mt-2 max-w-md" />
-
-            <StatGroup items={STATS} />
+            </FadeIn>
           </div>
 
-          <div className="relative">
-            <div className="ambient-glow absolute -inset-10 -z-10" />
-            <Media
-              src={assets.heroChair}
-              alt="Cadeira de massagem physical"
-              aspect="aspect-[4/3]"
-              fit="contain"
-              className="bg-transparent"
-              sizes="(max-width: 1024px) 100vw, 55vw"
-              priority
-            />
-          </div>
+          <HeroStage />
         </div>
       </Container>
     </section>

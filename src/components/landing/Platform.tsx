@@ -1,123 +1,66 @@
-import {
-  Badge,
-  Button,
-  Card,
-  Icon,
-  Media,
-  Section,
-  SectionHeading,
-} from "@/components/ui";
+import { Container, Icon } from "@/components/ui";
 import type { IconName } from "@/components/ui";
-import { assets } from "@/config/brand";
+import { HrPanelMock } from "./HrPanelMock";
 
-type PlatformBlock = {
-  badge: string;
-  title: string;
-  description: string;
-  bullets: { icon: IconName; text: string }[];
-  image: string;
-  imageAlt: string;
-  cta: string;
-  /** Inverte a ordem (imagem à esquerda) em telas grandes. */
-  reversed?: boolean;
-};
-
-const BLOCKS: PlatformBlock[] = [
+const POINTS: { icon: IconName; title: string; text: string }[] = [
   {
-    badge: "App do colaborador",
-    title: "A pausa começa no celular",
-    description:
-      "O colaborador vê os horários livres, reserva a sessão e recebe o lembrete no celular. No horário marcado, inicia a massagem pelo próprio app.",
-    bullets: [
-      { icon: "calendar", text: "Agendamento em três toques nos horários liberados pela empresa" },
-      { icon: "bell", text: "Notificação de lembrete quando a sessão está próxima" },
-      { icon: "chair", text: "Na data e hora da reserva, o app inicia a sessão e ativa a cadeira" },
-    ],
-    image: assets.appMockup,
-    imageAlt: "Aplicativo do colaborador physical em um celular",
-    cta: "Ver o app do colaborador",
+    icon: "chart",
+    title: "Adesão por área",
+    text: "Sessões por dia, comparecimento e uso por departamento no período que você escolher.",
   },
   {
-    badge: "Painel de RH",
-    title: "Controle e indicadores de bem-estar",
-    description:
-      "O RH acompanha adesão por área, satisfação e status das cadeiras em um painel único — dados para justificar e ampliar o programa.",
-    bullets: [
-      { icon: "chart", text: "Uso por departamento, horário de pico e taxa de ocupação" },
-      { icon: "users", text: "Gestão de colaboradores, escalas e agendamentos" },
-      { icon: "wrench", text: "Status de manutenção e higienização de cada cadeira" },
-    ],
-    image: assets.dashboardMockup,
-    imageAlt: "Painel de RH physical com dashboards de uso",
-    cta: "Ver o painel de RH",
-    reversed: true,
+    icon: "users",
+    title: "Colaboradores e horários",
+    text: "Cadastre o time por planilha, defina a janela de cada um e quantas sessões cabem por semana.",
+  },
+  {
+    icon: "wrench",
+    title: "Cadeiras sob controle",
+    text: "Veja quais cadeiras estão online, em sessão ou paradas, sem descer até o andar.",
   },
 ];
 
+/**
+ * Painel de RH: o lado de quem cuida do programa.
+ *
+ * <p>
+ * O app do colaborador já aparece em movimento em "Como funciona"; aqui o
+ * assunto é o painel, mostrado como tela viva em vez de imagem.
+ */
 export function Platform() {
   return (
-    <Section id="plataforma" tone="raised" containerSize="wide">
-      <SectionHeading
-        eyebrow="Plataforma"
-        title="Dois produtos, uma operação"
-        description="Aplicativo para quem usa a cadeira, painel administrativo para quem cuida do programa."
-      />
-
-      <div className="mt-16 flex flex-col gap-16">
-        {BLOCKS.map((block) => (
-          <div
-            key={block.title}
-            className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16"
-          >
-            <div className={block.reversed ? "lg:order-2" : undefined}>
-              <div className="flex flex-col gap-5">
-                <Badge tone="accent">{block.badge}</Badge>
-                <h3 className="font-display text-2xl leading-tight text-ink-primary sm:text-3xl">
-                  {block.title}
-                </h3>
-                <p className="max-w-lg text-sm leading-relaxed text-ink-secondary sm:text-base">
-                  {block.description}
-                </p>
-
-                <ul className="flex flex-col gap-3.5">
-                  {block.bullets.map((bullet) => (
-                    <li key={bullet.text} className="flex items-start gap-3">
-                      <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-control border border-line bg-surface-card text-accent-soft">
-                        <Icon name={bullet.icon} className="h-4 w-4" />
-                      </span>
-                      <span className="text-sm leading-relaxed text-ink-secondary">
-                        {bullet.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div>
-                  <Button
-                    variant="secondary"
-                    trailingIcon={<Icon name="arrowRight" className="h-4 w-4" />}
-                  >
-                    {block.cta}
-                  </Button>
-                </div>
-              </div>
+    <section id="plataforma" className="bg-surface-nav py-20 lg:py-28">
+      <Container size="wide">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-4">
+              <h2 className="font-display text-[1.9rem] leading-tight text-ink-primary sm:text-[2.6rem]">
+                O painel de RH mostra se o benefício está sendo usado
+              </h2>
+              <p className="text-base leading-relaxed text-ink-secondary">
+                Dados para justificar o programa na próxima reunião de orçamento, e para ampliar onde a
+                fila já existe.
+              </p>
             </div>
 
-            <Card
-              variant="glass"
-              padding="none"
-              className={block.reversed ? "lg:order-1" : undefined}
-            >
-              <Media
-                src={block.image}
-                alt={block.imageAlt}
-                aspect="aspect-[4/3]"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </Card>
+            <ul className="flex flex-col gap-5">
+              {POINTS.map((p) => (
+                <li key={p.title} className="flex items-start gap-4">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-control border border-line bg-surface-card text-accent-soft">
+                    <Icon name={p.icon} className="h-5 w-5" />
+                  </span>
+                  <span className="flex flex-col gap-1">
+                    <span className="text-base font-semibold text-ink-primary">{p.title}</span>
+                    <span className="text-sm leading-relaxed text-ink-secondary">{p.text}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
-        ))}
-      </div>
-    </Section>
+
+          <HrPanelMock />
+        </div>
+      </Container>
+    </section>
   );
 }

@@ -45,8 +45,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+    // data-scroll-behavior: o globals.css liga a rolagem suave para as âncoras
+    // da landing; com este atributo o Next a desliga durante a troca de rota,
+    // para a página nova abrir no topo sem animar a descida.
     <html
       lang="pt-BR"
+      data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} ${displaySerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">

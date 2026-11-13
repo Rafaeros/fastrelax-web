@@ -1,5 +1,6 @@
 import type { Route } from "next";
-import { ButtonLink, Card, Icon, Section, SectionHeading } from "@/components/ui";
+import { SpotlightCard } from "@/components/motion/SpotlightCard";
+import { ButtonLink, Icon, Section, SectionHeading } from "@/components/ui";
 
 type Area = {
   eyebrow: string;
@@ -48,20 +49,18 @@ export function AccessAreas() {
   return (
     <Section id="acessos">
       <SectionHeading
-        eyebrow="Acesso"
-        title="Entre na sua área"
-        description="Cada perfil tem a própria porta de entrada."
+        title="Já usa? Entre na sua área"
+        description="Colaborador e RH têm entradas separadas."
       />
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2">
         {AREAS.map((area) => (
-          <Card
+          <SpotlightCard
             key={area.href}
-            padding="lg"
             className={
               area.primary
-                ? "flex flex-col gap-4 border-accent/30 bg-gradient-to-br from-accent-strong/20 via-surface-card to-surface-card"
-                : "flex flex-col gap-4"
+                ? "card flex flex-col gap-4 border-accent/30 bg-gradient-to-br from-accent-strong/20 via-surface-card to-surface-card p-7"
+                : "card flex flex-col gap-4 p-7"
             }
           >
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-surface-hover">
@@ -88,7 +87,7 @@ export function AccessAreas() {
             >
               {area.cta}
             </ButtonLink>
-          </Card>
+          </SpotlightCard>
         ))}
       </div>
     </Section>
